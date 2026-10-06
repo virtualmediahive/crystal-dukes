@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Crystal Dukes | Dothan Realtor</title>
-<meta name="description" content="I help Wiregrass families buy and sell with confidence, backed by Keller Williams Realty Southeast Alabama, with 124 homes sold and counting.">
+<meta name="description" content="I help Southeast Alabama families buy and sell with confidence, backed by Keller Williams Realty Southeast Alabama, with 124 homes sold and counting.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Rouge+Script&display=swap" rel="stylesheet">
 <style>
@@ -50,6 +50,13 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .link-arrow{display:inline-flex;align-items:center;gap:10px;font-size:15px}
 .link-arrow svg{width:14px;height:14px;transition:transform .3s var(--ease)}
 
+.nav-r{display:flex;align-items:center;gap:10px}
+.menu-btn{display:none;width:40px;height:40px;border:0;border-radius:8px;background:transparent;cursor:pointer;position:relative}
+.menu-btn span{position:absolute;left:10px;right:10px;height:2px;background:var(--ink);border-radius:2px;transition:transform .35s var(--ease),top .35s var(--ease)}
+.menu-btn span:first-child{top:15px}.menu-btn span:last-child{top:23px}
+nav.open .menu-btn span:first-child{top:19px;transform:rotate(45deg)}
+nav.open .menu-btn span:last-child{top:19px;transform:rotate(-45deg)}
+.mmenu{display:none}
 /* hero */
 .hero{position:relative;min-height:min(820px,calc(100vh - 60px));display:flex;align-items:stretch;overflow:hidden;background:var(--paper)}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;width:100%}
@@ -124,11 +131,32 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 
 /* achievements */
 .ach{background:var(--sand);padding-block:100px 120px}
-.ach-list{margin-top:60px;display:grid;gap:22px}
-.ach-row{display:grid;grid-template-columns:1fr 1fr auto;gap:24px;align-items:baseline;padding-inline:12px}
+.ach-list{margin-top:60px;display:grid;gap:14px}
+.ach-row{display:grid;grid-template-columns:auto 1.2fr 1fr auto;gap:24px;align-items:center;padding:14px 18px;border-radius:14px;transition:background .4s var(--ease)}
+.ach-row:hover{background:#fff}
+.ach-ic{width:52px;height:52px;border-radius:50%;background:var(--gold);color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px -12px rgba(213,152,61,.9);transition:transform .5s var(--ease)}
+.ach-ic svg{width:26px;height:26px}
+.ach-row:hover .ach-ic{transform:rotate(-12deg) scale(1.08)}
 .ach-row h4{font-size:clamp(18px,1.6vw,22px);font-weight:400;color:var(--ink)}
-.ach-row span{font-size:17px;color:#333}
+.ach-row .ach-org,.ach-row .d{font-size:17px;color:#333}
 .ach-row .d{text-align:right}
+.ic-star svg{animation:twinkle 2.8s ease-in-out infinite;animation-delay:1.6s}
+@keyframes twinkle{0%,70%,100%{transform:scale(1) rotate(0)}80%{transform:scale(1.25) rotate(18deg)}90%{transform:scale(.95) rotate(-6deg)}}
+.ic-chart rect{transform-origin:center bottom;transform-box:fill-box}
+/* reveal: icon pops in, title wipes in, details rise */
+.js .ach-row .ach-ic{opacity:0;transform:scale(0) rotate(-120deg)}
+.js .ach-row.in .ach-ic{animation:icPop .9s var(--ease) forwards;animation-delay:var(--d)}
+@keyframes icPop{0%{opacity:0;transform:scale(0) rotate(-120deg)}60%{opacity:1;transform:scale(1.2) rotate(10deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+.js .ach-row.in:hover .ach-ic{animation:none;opacity:1;transform:rotate(-12deg) scale(1.08)}
+.js .ach-row .ic-chart rect{transform:scaleY(0)}
+.js .ach-row.in .ic-chart rect{transform:scaleY(1);transition:transform .7s var(--ease)}
+.js .ach-row.in .ic-chart .b1{transition-delay:calc(var(--d) + .5s)}
+.js .ach-row.in .ic-chart .b2{transition-delay:calc(var(--d) + .65s)}
+.js .ach-row.in .ic-chart .b3{transition-delay:calc(var(--d) + .8s)}
+.js .ach-row h4{clip-path:inset(0 100% 0 0);transform:translateX(-14px);transition:clip-path 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d) + .2s)}
+.js .ach-row.in h4{clip-path:inset(0 0 0 0);transform:none}
+.js .ach-row .ach-org,.js .ach-row .d{opacity:0;transform:translateY(12px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--d) + .45s)}
+.js .ach-row.in .ach-org,.js .ach-row.in .d{opacity:1;transform:none}
 
 /* steps */
 .steps{background:var(--gold);padding-block:90px 80px;color:#fff}
@@ -215,11 +243,22 @@ footer nav{all:unset}
 @media (prefers-reduced-motion:reduce){
   .js .rw .w,.js .fu,.js .fl,.js .hero-img,.js .zi{opacity:1!important;filter:none!important;transform:none!important;transition:none!important}
   .track{animation:none}
+  .js .ach-row .ach-ic,.js .ach-row h4,.js .ach-row .ach-org,.js .ach-row .d,.js .ach-row .ic-chart rect{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important;transition:none!important}
+  .ic-star svg{animation:none}
   html{scroll-behavior:auto}
 }
 
 @media (max-width:980px){
   .links{display:none}
+  .menu-btn{display:block}
+  .mmenu{display:grid;overflow:hidden;max-height:0;transition:max-height .45s var(--ease);background:#fff;padding-inline:clamp(16px,5vw,78px)}
+  nav.open .mmenu{max-height:360px;border-bottom:1px solid var(--line)}
+  .mmenu a{padding:14px 0;font-size:18px;color:var(--ink);border-top:1px solid var(--line)}
+  .why,.deals,.ach,.steps,.reviews,.faq,.listings{padding-block:64px}
+  .about{padding-block:40px 64px}
+  .step .sp div{aspect-ratio:4/5}
+  .cta-copy{padding-block:64px 430px!important}
+
   .hero{min-height:0}
   .hero .wrap{grid-template-columns:1fr}
   .hero-copy{padding-block:48px 0}
@@ -230,8 +269,9 @@ footer nav{all:unset}
   .cards3,.steps-grid{grid-template-columns:1fr}
   .card{min-height:0}
   .rail{grid-auto-columns:82%}
-  .ach-row{grid-template-columns:1fr;gap:2px}
-  .ach-row .d{text-align:left;color:var(--mut)}
+  .ach-row{grid-template-columns:auto 1fr;column-gap:16px;row-gap:2px;padding:12px}
+  .ach-row .ach-ic{grid-row:span 3;width:46px;height:46px;align-self:start}
+  .ach-row .ach-org,.ach-row .d{font-size:14px;text-align:left;color:var(--mut)}
   .steps-top{flex-direction:column}
   .cta .wrap{min-height:0}
   .cta-copy{padding-block:64px 380px}
@@ -245,7 +285,10 @@ footer nav{all:unset}
 }
 @media (max-width:520px){
   .logo{font-size:28px}
-  nav .btn{font-size:13px;padding:8px 11px}
+  nav .btn svg{display:none}
+  nav .btn{font-size:13px;padding:8px 11px;white-space:nowrap}
+  nav .wrap{gap:10px}
+  nav .logo{font-size:26px}
   .fgrid{grid-template-columns:1fr}
 }
 </style>
@@ -255,13 +298,14 @@ footer nav{all:unset}
 <nav aria-label="Main"><div class="wrap">
   <a class="logo" href="#top">Crystal Dukes</a>
   <div class="links"><a href="#why">Why Choose Me</a><a href="#deals">Recent Deals</a><a href="#about">About</a><a href="#listings">Listings</a><a href="#faq">FAQ</a></div>
-  <a class="btn" href="tel:+18507049406">Book Appointment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></a>
-</div></nav>
+  <div class="nav-r"><a class="btn" href="tel:+18507049406">Book Appointment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></a><button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu"><span></span><span></span></button></div>
+</div>
+<div class="mmenu" id="mmenu"><a href="#why">Why Choose Me</a><a href="#deals">Recent Deals</a><a href="#about">About</a><a href="#listings">Listings</a><a href="#faq">FAQ</a></div></nav>
 
 <header class="hero" id="top"><div class="wrap">
   <div class="hero-copy">
     <h1 class="rw">Hi, I'm <span class="script">Crystal Dukes</span> your Dothan real estate agent.</h1>
-    <p class="fu" style="--d:500ms">I help Wiregrass families buy and sell with confidence, backed by Keller Williams Realty Southeast Alabama, with 124 homes sold and counting.</p>
+    <p class="fu" style="--d:500ms">I help Southeast Alabama families buy and sell with confidence, backed by Keller Williams Realty Southeast Alabama, with 124 homes sold and counting.</p>
     <a class="btn fu" style="--d:650ms" href="tel:+18507049406">Book Appointment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></a>
   </div>
   <div class="hero-img"><img src="crystal-cutout.webp" alt="Crystal Dukes" fetchpriority="high"></div>
@@ -273,7 +317,7 @@ footer nav{all:unset}
   <div class="cards3">
     <div class="card fu"><div><div class="big">57</div><div class="lbl">Homes sold in 2025, verified by RealTrends</div></div>
       <div><div class="partof">Part of</div><div class="wordmark">Keller Williams Realty Southeast Alabama</div></div></div>
-    <div class="card fu" style="--d:120ms"><div><h4>Specialty Area</h4><div class="pills"><span class="pill">Dothan</span><span class="pill">Houston County</span><span class="pill">Newton</span><span class="pill">Ozark</span><span class="pill">Headland</span><span class="pill">Wiregrass</span></div></div>
+    <div class="card fu" style="--d:120ms"><div><h4>Specialty Area</h4><div class="pills"><span class="pill">Dothan</span><span class="pill">Houston County</span><span class="pill">Newton</span><span class="pill">Ozark</span><span class="pill">Headland</span><span class="pill">Southeast Alabama</span></div></div>
       <div><div class="big">$12.2M</div><div class="lbl">Sales volume in 2025, from first-time buyers to luxury homes.</div></div></div>
     <div class="card dark fu" style="--d:240ms"><div><div class="big">5.0★</div><div class="lbl">Verified client rating across 19 reviews</div></div>
       <blockquote>&quot;Real estate is my passion, not my job. If you&#x27;re not left with an amazing experience, I haven&#x27;t done my job.&quot;</blockquote></div>
@@ -295,7 +339,7 @@ footer nav{all:unset}
 
 <section class="ach"><div class="wrap">
   <h2 class="rw center">My Achievements Over the Years</h2>
-  <div class="ach-list"><div class="ach-row fu" style="--d:0ms"><h4>Top Agent by Transactions, #3 in Dothan</h4><span>RealTrends Verified</span><span class="d">2025</span></div><div class="ach-row fu" style="--d:90ms"><h4>Top Agent by Volume, #5 in Dothan</h4><span>RealTrends Verified</span><span class="d">2025</span></div><div class="ach-row fu" style="--d:180ms"><h4>5-Star Client Rating</h4><span>Google &amp; Zillow reviews</span><span class="d">19 reviews</span></div><div class="ach-row fu" style="--d:270ms"><h4>Top Producer &amp; Highest Volume</h4><span>Keller Williams Southeast Alabama</span><span class="d">Monthly honors</span></div><div class="ach-row fu" style="--d:360ms"><h4>Million Dollar Month</h4><span>Keller Williams Southeast Alabama</span><span class="d">Recognition</span></div></div>
+  <div class="ach-list"><div class="ach-row" style="--d:0ms"><span class="ach-ic ic-key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span><h4>Top Agent by Transactions, #3 in Dothan</h4><span class="ach-org">RealTrends Verified</span><span class="d">2025</span></div><div class="ach-row" style="--d:140ms"><span class="ach-ic ic-chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20h16"/><rect class="b1" x="5" y="13" width="3" height="7" rx="1"/><rect class="b2" x="10.5" y="9" width="3" height="11" rx="1"/><rect class="b3" x="16" y="5" width="3" height="15" rx="1"/></svg></span><h4>Top Agent by Volume, #5 in Dothan</h4><span class="ach-org">RealTrends Verified</span><span class="d">2025</span></div><div class="ach-row" style="--d:280ms"><span class="ach-ic ic-star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.5 1.1 6.3L12 17.3l-5.6 3 1.1-6.3-4.6-4.5 6.3-.9z"/></svg></span><h4>5-Star Client Rating</h4><span class="ach-org">Google &amp; Zillow reviews</span><span class="d">19 reviews</span></div><div class="ach-row" style="--d:420ms"><span class="ach-ic ic-trophy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"/><path d="M17 5h3a3 3 0 01-3 4M7 5H4a3 3 0 003 4"/></svg></span><h4>Top Producer &amp; Highest Volume</h4><span class="ach-org">Keller Williams Southeast Alabama</span><span class="d">Monthly honors</span></div><div class="ach-row" style="--d:560ms"><span class="ach-ic ic-dollar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M15 9.2c-.5-1-1.6-1.6-3-1.6-1.7 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.5 0-2.6-.6-3.1-1.7M12 6v1.6M12 16.6V18"/></svg></span><h4>Million Dollar Month</h4><span class="ach-org">Keller Williams Southeast Alabama</span><span class="d">Recognition</span></div></div>
 </div></section>
 
 <section class="steps"><div class="wrap">
@@ -319,7 +363,7 @@ footer nav{all:unset}
 
 <section class="faq" id="faq"><div class="wrap">
   <h2 class="rw center">Answers to Your Questions</h2>
-  <div class="faq-list"><div class="qa"><button type="button" aria-expanded="false" id="q0"><span>Do you work with first-time homebuyers?</span><span class="ic">+</span></button><div class="ans"><div><p>Absolutely. First-time buyers are some of my favorite clients. I walk you through every step, from pre-approval to closing, in plain language.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q1"><span>What areas do you serve?</span><span class="ic">+</span></button><div class="ans"><div><p>Dothan, Houston County and the surrounding Wiregrass, including Newton, Ozark and Headland. Ask me about anywhere nearby.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q2"><span>Can you help me sell my home?</span><span class="ic">+</span></button><div class="ans"><div><p>Yes. I&#x27;ll give you an honest price, a plan to market your home, and constant updates until it&#x27;s sold.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q3"><span>Do you handle investment, commercial or relocation purchases?</span><span class="ic">+</span></button><div class="ans"><div><p>Yes. I work with investors, relocating families, foreclosures and commercial buyers as well as residential clients.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q4"><span>How quickly will you respond?</span><span class="ic">+</span></button><div class="ans"><div><p>Fast. Communication is my promise, so you&#x27;ll never wonder where things stand.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q5"><span>Can we talk before I commit to anything?</span><span class="ic">+</span></button><div class="ans"><div><p>Of course. The first call is just a conversation. No pressure, no obligation.</p></div></div></div></div>
+  <div class="faq-list"><div class="qa"><button type="button" aria-expanded="false" id="q0"><span>Do you work with first-time homebuyers?</span><span class="ic">+</span></button><div class="ans"><div><p>Absolutely. First-time buyers are some of my favorite clients. I walk you through every step, from pre-approval to closing, in plain language.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q1"><span>What areas do you serve?</span><span class="ic">+</span></button><div class="ans"><div><p>Dothan, Houston County and surrounding Southeast Alabama, including Newton, Ozark and Headland. Ask me about anywhere nearby.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q2"><span>Can you help me sell my home?</span><span class="ic">+</span></button><div class="ans"><div><p>Yes. I&#x27;ll give you an honest price, a plan to market your home, and constant updates until it&#x27;s sold.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q3"><span>Do you handle investment, commercial or relocation purchases?</span><span class="ic">+</span></button><div class="ans"><div><p>Yes. I work with investors, relocating families, foreclosures and commercial buyers as well as residential clients.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q4"><span>How quickly will you respond?</span><span class="ic">+</span></button><div class="ans"><div><p>Fast. Communication is my promise, so you&#x27;ll never wonder where things stand.</p></div></div></div><div class="qa"><button type="button" aria-expanded="false" id="q5"><span>Can we talk before I commit to anything?</span><span class="ic">+</span></button><div class="ans"><div><p>Of course. The first call is just a conversation. No pressure, no obligation.</p></div></div></div></div>
 </div></section>
 
 <section class="cta"><div class="wrap">
@@ -369,8 +413,8 @@ footer nav{all:unset}
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
   },{threshold:.15,rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('.rw,.fu,.fl,.zi,.hero-img').forEach(function(el){io.observe(el);});
-  // carousel arrows
+  document.querySelectorAll('.rw,.fu,.fl,.zi,.hero-img,.ach-row').forEach(function(el){io.observe(el);});
+
   document.querySelectorAll('.arrows button').forEach(function(b){
     b.addEventListener('click',function(){
       var r=document.getElementById(b.dataset.rail);var card=r.firstElementChild;
@@ -381,6 +425,8 @@ footer nav{all:unset}
     });
   });
   // FAQ accordion
+  var nav=document.querySelector('nav'),mb=document.querySelector('.menu-btn');
+  if(mb){mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o)});document.querySelectorAll('.mmenu a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');mb.setAttribute('aria-expanded','false')})});}
   document.querySelectorAll('.qa button').forEach(function(b){
     b.addEventListener('click',function(){
       var qa=b.parentElement;var open=qa.classList.toggle('open');b.setAttribute('aria-expanded',open);
